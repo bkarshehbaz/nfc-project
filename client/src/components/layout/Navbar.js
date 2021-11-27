@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
+import Logo from '../../img/Loucase Official Logo Transparent (2).png';
+
 const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   const authLinks = (
     <ul>
-      <li>
+      {/* <li>
         <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <Link to="/posts">Posts</Link>
-      </li>
+      </li> */}
       <li>
         <Link to="/dashboard">
           <i className="fas fa-user" />{' '}
@@ -30,25 +32,24 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
 
   const guestLinks = (
     <ul>
-      <li>
+      {/* <li>
         <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <Link to="/register">Register</Link>
       </li>
       <li>
         <Link to="/login">Login</Link>
-      </li>
+      </li> */}
     </ul>
   );
 
   return (
-    <nav className="navbar bg-dark">
-      <h1>
-        <Link to="/">
-          <i className="fas fa-code" /> DevConnector
-        </Link>
-      </h1>
+    <nav className="navbar ">
+      <Link to="/">
+        <img style={{ width: '200px' }} src={Logo} />
+      </Link>
+
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
     </nav>
   );
