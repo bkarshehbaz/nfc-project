@@ -9,6 +9,11 @@ const Alert = ({ alerts }) => (
         {alert.msg}
       </div>
     ))}
+    {/* {alerts.length > 0 ? (
+      <div className={`alert alert-${alerts[0].alertType}`}>
+        {alerts[0].msg}
+      </div>
+    ) : null} */}
   </div>
 );
 

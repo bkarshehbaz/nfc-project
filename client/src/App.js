@@ -7,6 +7,7 @@ import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import ProfileForm from './components/profile-forms/ProfileForm';
+import ViewProfile from './components/profile/ViewProfile';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import Profiles from './components/profiles/Profiles';
@@ -22,6 +23,8 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
+
+import Image from './LOUCASE-DASHBOARD (1).pdf';
 
 import './App.css';
 
@@ -49,6 +52,7 @@ const App = () => {
         <Alert />
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="profile" element={<ViewProfile />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="profiles" element={<Profiles />} />

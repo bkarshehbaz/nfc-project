@@ -7,6 +7,14 @@ import Experience from './Experience';
 import Education from './Education';
 import { getCurrentProfile, deleteAccount } from '../../actions/profile';
 
+import EditIcon from '../../img/icons/ICONS LOUCASE-07.png';
+
+import Profile from '../../img/icons/croped-ICONS LOUCASE-06.png';
+import Connect from '../../img/icons/cropped-ICONS LOUCASE-08.png';
+import EditProfile from '../../img/icons/cropped-ICONS LOUCASE-05.png';
+
+import NewDashboard from './NewDashboard';
+
 const Dashboard = ({
   getCurrentProfile,
   deleteAccount,
@@ -19,7 +27,49 @@ const Dashboard = ({
 
   return (
     <section className="container">
-      <h1 className="large text-primary">Dashboard</h1>
+      <p style={{ marginBottom: '5px' }} className="Title-heading">
+        Dashboard
+      </p>
+      <p className="Title-text">Manage Your account in one place</p>
+      <div className="dashboard-container">
+        <div className="blocks-wrapper">
+          <Link to="">
+            <div className="block">
+              <img src={EditProfile} />
+              <p className="icon-heading">Edit Profile</p>
+              <p className="icon-text">Customiz your personal information</p>
+            </div>
+          </Link>
+          <Link to="">
+            <div className="block">
+              <img src={Profile} />
+              <p className="icon-heading">View Profile</p>
+              <p className="icon-text">Time to start connecting</p>
+            </div>
+          </Link>
+
+          <Link to="">
+            <div className="block">
+              <img src={EditIcon} />
+              <p className="icon-heading">Share Profile</p>
+              <p className="icon-text">Automatically share your profile</p>
+            </div>
+          </Link>
+          <Link to="">
+            <div className="block">
+              <img src={Connect} />
+              <p className="icon-heading">Connections</p>
+              <p className="icon-text">View all your connections</p>
+            </div>
+          </Link>
+        </div>
+      </div>
+      <input
+        type="submit"
+        className="btn  custom-btn-small "
+        value="SIGN OUT"
+      />
+      {/* <h1 className="large text-primary">Dashboard</h1>
       <p className="lead">
         <i className="fas fa-user" /> Welcome {user && user.name}
       </p>
@@ -42,7 +92,7 @@ const Dashboard = ({
             Create Profile
           </Link>
         </>
-      )}
+      )} */}
     </section>
   );
 };

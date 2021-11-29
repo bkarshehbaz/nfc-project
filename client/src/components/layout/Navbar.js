@@ -15,18 +15,18 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
       {/* <li>
         <Link to="/posts">Posts</Link>
       </li> */}
-      <li>
+      {/* <li>
         <Link to="/dashboard">
           <i className="fas fa-user" />{' '}
           <span className="hide-sm">Dashboard</span>
         </Link>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <a onClick={logout} href="#!">
           <i className="fas fa-sign-out-alt" />{' '}
           <span className="hide-sm">Logout</span>
         </a>
-      </li>
+      </li> */}
     </ul>
   );
 
@@ -47,7 +47,7 @@ const Navbar = ({ auth: { isAuthenticated }, logout }) => {
   return (
     <nav className="navbar ">
       <Link to="/">
-        <img style={{ width: '200px' }} src={Logo} />
+        <img style={{ width: '150px' }} src={Logo} />
       </Link>
 
       <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
