@@ -38,8 +38,20 @@ router.get('/me', auth, async (req, res) => {
 router.post(
   '/',
   auth,
-  check('status', 'Status is required').notEmpty(),
-  check('skills', 'Skills is required').notEmpty(),
+  check('name', 'Name is required').notEmpty(),
+  check('bio', 'Bio is required').notEmpty(),
+  check('sos', 'Sos is required').notEmpty(),
+  check('jobtitle', 'Job Title is required').notEmpty(),
+  check('contactnumber', 'Contact Number is required').notEmpty(),
+  check('email', 'Email is required').notEmpty(),
+  check('address', 'Address is required').notEmpty(),
+  check('website', 'Website  link is required').notEmpty(),
+  check('instagram', 'Instagram is required').notEmpty(),
+  check('linkedin', 'Linkedin is required').notEmpty(),
+  check('facebook', 'Facebook is required').notEmpty(),
+  check('whatsapp', 'Whatsapp is required').notEmpty(),
+  check('behance', 'Behance is required').notEmpty(),
+  check('twitter', 'Twitter is required').notEmpty(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -48,40 +60,52 @@ router.post(
 
     // destructure the request
     const {
+      name,
+      bio,
+      sos,
+      jobtitle,
+      contactnumber,
+      email,
+      address,
       website,
-      skills,
-      youtube,
-      twitter,
       instagram,
       linkedin,
       facebook,
-      // spread the rest of the fields we don't need to check
-      ...rest
+      whatsapp,
+      behance,
+      twitter,
+      dp
     } = req.body;
 
     // build a profile
     const profileFields = {
-      user: req.user.id,
-      website:
-        website && website !== ''
-          ? normalize(website, { forceHttps: true })
-          : '',
-      skills: Array.isArray(skills)
-        ? skills
-        : skills.split(',').map((skill) => ' ' + skill.trim()),
-      ...rest
+      name,
+      bio,
+      sos,
+      jobtitle,
+      contactnumber,
+      email,
+      address,
+      website,
+      instagram,
+      linkedin,
+      facebook,
+      whatsapp,
+      behance,
+      twitter,
+      dp
     };
 
-    // Build socialFields object
-    const socialFields = { youtube, twitter, instagram, linkedin, facebook };
+    // // Build socialFields object
+    // const socialFields = { youtube, twitter, instagram, linkedin, facebook };
 
-    // normalize social fields to ensure valid url
-    for (const [key, value] of Object.entries(socialFields)) {
-      if (value && value.length > 0)
-        socialFields[key] = normalize(value, { forceHttps: true });
-    }
-    // add to profileFields
-    profileFields.social = socialFields;
+    // // normalize social fields to ensure valid url
+    // for (const [key, value] of Object.entries(socialFields)) {
+    //   if (value && value.length > 0)
+    //     socialFields[key] = normalize(value, { forceHttps: true });
+    // }
+    // // add to profileFields
+    // profileFields.social = socialFields;
 
     try {
       // Using upsert option (creates new doc if no match is found):

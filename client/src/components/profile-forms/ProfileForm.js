@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
 
+import axios from 'axios';
+
 import ProfileImage from '../../img/profile-img.PNG';
 import Email from '../../img/icons/ICONS LOUCASE-01.png';
 import Lock from '../../img/icons/ICONS LOUCASE-02.png';
@@ -30,18 +32,21 @@ import SOS from '../../img/icons/ICONS LOUCASE-09.png';
   we can then safely use this to construct our profileData
  */
 const initialState = {
-  company: '',
-  website: '',
-  location: '',
-  status: '',
-  skills: '',
-  githubusername: '',
+  name: '',
   bio: '',
-  twitter: '',
-  facebook: '',
+  sos: '',
+  jobtitle: '',
+  contactnumber: '',
+  email: '',
+  address: '',
+  website: '',
+  instagram: '',
   linkedin: '',
-  youtube: '',
-  instagram: ''
+  facebook: '',
+  whatsapp: '',
+  behance: '',
+  twitter: '',
+  dp: ''
 };
 
 const ProfileForm = ({
@@ -57,41 +62,44 @@ const ProfileForm = ({
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // if there is no profile, attempt to fetch one
-    if (!profile) getCurrentProfile();
+  // useEffect(() => {
+  //   // if there is no profile, attempt to fetch one
+  //   if (!profile) getCurrentProfile();
 
-    // if we finished loading and we do have a profile
-    // then build our profileData
-    if (!loading && profile) {
-      const profileData = { ...initialState };
-      for (const key in profile) {
-        if (key in profileData) profileData[key] = profile[key];
-      }
-      for (const key in profile.social) {
-        if (key in profileData) profileData[key] = profile.social[key];
-      }
-      // the skills may be an array from our API response
-      if (Array.isArray(profileData.skills))
-        profileData.skills = profileData.skills.join(', ');
-      // set local state with the profileData
-      setFormData(profileData);
-    }
-  }, [loading, getCurrentProfile, profile]);
+  //   // if we finished loading and we do have a profile
+  //   // then build our profileData
+  //   if (!loading && profile) {
+  //     const profileData = { ...initialState };
+  //     for (const key in profile) {
+  //       if (key in profileData) profileData[key] = profile[key];
+  //     }
+  //     for (const key in profile.social) {
+  //       if (key in profileData) profileData[key] = profile.social[key];
+  //     }
+  //     // the skills may be an array from our API response
+  //     if (Array.isArray(profileData.skills))
+  //       profileData.skills = profileData.skills.join(', ');
+  //     // set local state with the profileData
+  //     setFormData(profileData);
+  //   }
+  // }, [loading, getCurrentProfile, profile]);
 
   const {
-    company,
-    website,
-    location,
-    status,
-    skills,
-    githubusername,
+    name,
     bio,
-    twitter,
-    facebook,
+    sos,
+    jobtitle,
+    contactnumber,
+    email,
+    address,
+    website,
+    instagram,
     linkedin,
-    youtube,
-    instagram
+    facebook,
+    whatsapp,
+    behance,
+    twitter,
+    dp
   } = formData;
 
   const onChange = (e) =>
@@ -101,7 +109,25 @@ const ProfileForm = ({
     e.preventDefault();
     createProfile(formData, navigate, profile ? true : false);
   };
-
+  const uploadImage = async (e) => {
+    console.log('uploadImage Triggerd');
+    const files = await e.target.files;
+    console.log(files);
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'TeacherAssistant');
+    axios
+      .post(
+        'https://api.cloudinary.com/v1_1/bkarshehbaz-com/image/upload',
+        data
+      )
+      .then((res) => {
+        // this.setState({ imageUrl: res.data.secure_url });
+        console.log(res.data.secure_url);
+        setFormData({ ...formData, dp: res.data.secure_url });
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <section className="container">
       <div
@@ -109,7 +135,22 @@ const ProfileForm = ({
         style={{ backgroundImage: `url(${ProfileImage})` }}
       ></div>
       <div className="button-blocks">
-        <button className="btn  custom-btn-small hollow-btn ">Upload</button>
+        <button
+          onClick={(e) => document.getElementById('file').click()}
+          className="btn  custom-btn-small hollow-btn "
+        >
+          Upload
+        </button>
+        <input
+          style={{ display: 'none' }}
+          type="file"
+          placeholder="* Upload an image"
+          onChange={uploadImage}
+          onClick={uploadImage}
+          name="file"
+          id="file"
+          className="btn btn-primary"
+        />
       </div>
 
       <div className="form-wrapper">
@@ -119,7 +160,7 @@ const ProfileForm = ({
               <img src={Name} />
             </span>
             <input
-              type="email"
+              type="text"
               placeholder="Name"
               name="name"
               // value={email}
@@ -149,7 +190,7 @@ const ProfileForm = ({
             <input
               type="text"
               placeholder="Emergency contact number"
-              name="SOS"
+              name="sos"
               // value={email}
               onChange={onChange}
               className="form-control custom-form-control"
@@ -163,7 +204,7 @@ const ProfileForm = ({
             <input
               type="text"
               placeholder="Job title"
-              name="job"
+              name="jobtitle"
               // value={email}
               onChange={onChange}
               className="form-control custom-form-control"
@@ -177,7 +218,7 @@ const ProfileForm = ({
             <input
               type="text"
               placeholder="Contact number"
-              name="phone"
+              name="contactnumber"
               // value={email}
               onChange={onChange}
               className="form-control custom-form-control"
@@ -238,7 +279,7 @@ const ProfileForm = ({
             <input
               type="text"
               placeholder="Instagram"
-              name="insta"
+              name="instagram"
               // value={password2}
               onChange={onChange}
               className="form-control custom-form-control"
@@ -251,7 +292,7 @@ const ProfileForm = ({
             <input
               type="text"
               placeholder="LinkedIn"
-              name="insta"
+              name="linkedin"
               // value={password2}
               onChange={onChange}
               className="form-control custom-form-control"

@@ -13,23 +13,31 @@ import Key from '../../img/icons/ICONS LOUCASE-03 (1).png';
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
+    serialnumber: '',
+    terms: false
   });
 
-  const { name, email, password, password2 } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const { email, password, password2, serialnumber, terms } = formData;
+  console.log(email, password, password2, serialnumber, terms);
+  const onChange = (e) => {
+    if (e.target.name == 'checkbox') {
+      setFormData({ ...formData, terms: !terms });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) {
+    if (terms == false) {
+      setAlert('Please accpet terms & conditions', 'danger');
+    } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      register({ name, email, password });
+      register({ email, password, serialnumber });
     }
   };
 
@@ -92,8 +100,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
           <input
             type="text"
             placeholder="Serial Number"
-            name="name"
-            value={name}
+            name="serialnumber"
+            value={serialnumber}
             onChange={onChange}
             className="form-control custom-form-control"
           />
@@ -110,8 +118,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             textAlign: 'center'
           }}
         >
-          <input className="checkbox" type="checkbox" /> I understand and agree
-          to terms & conditions
+          <input
+            onClick={onChange}
+            className="checkbox"
+            type="checkbox"
+            value={terms}
+            name="checkbox"
+          />{' '}
+          I understand and agree to terms & conditions
         </label>
         <input type="submit" className="btn  custom-btn-lg" value="Sign Up" />
       </form>
